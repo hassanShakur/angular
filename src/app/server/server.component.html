@@ -1,2 +1,3 @@
-<p>Data from ts file: {{ data }}</p>
-<p [innerText]="counter"></p>
+<label for="email">Email</label>
+<input type="email" id="email" [(ngModel)]="myEmail" />
+<p>You entered: {{ myEmail || 'nothing' }}</p>
