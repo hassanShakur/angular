@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./server.component.scss'],
 })
 export class ServerComponent {
-  myEmail = 'a@b.c'
+  visible = false;
+
+  toggle() {
+    this.visible = !this.visible;
+  }
 }

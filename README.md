@@ -109,3 +109,36 @@ Then in the `html`:
 <input type="email" id="email" [(ngModel)]="myEmail" />
 <p>You entered: {{ myEmail }}</p>
 ```
+
+### Directives
+
+These are kind of instructions to do a piece of task. Eg for conditional rendering:
+In `html`:
+
+```html
+<button (click)="toggle()">Toggle state</button>
+<p *ngIf="visible">State on</p>
+<p *ngIf="!visible">State off</p>
+```
+
+Or:
+
+```html
+<button (click)="toggle()">Toggle state</button>
+<p *ngIf="visible; else offState">State on</p>
+<ng-template #offState>
+  <p>State off</p>
+</ng-template>
+```
+
+And `ts`:
+
+```ts
+export class MyComponent {
+  visible = false;
+
+  toggle() {
+    this.visible = !this.visible;
+  }
+}
+```

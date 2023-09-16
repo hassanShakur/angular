@@ -1,3 +1,5 @@
-<label for="email">Email</label>
-<input type="email" id="email" [(ngModel)]="myEmail" />
-<p>You entered: {{ myEmail || 'nothing' }}</p>
+<button (click)="toggle()">Toggle state</button>
+<p *ngIf="visible; else offState">State on</p>
+<ng-template #offState>
+    <p>State off</p>
+</ng-template>
