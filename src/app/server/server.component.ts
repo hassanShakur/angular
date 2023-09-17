@@ -6,9 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./server.component.scss'],
 })
 export class ServerComponent {
-  visible = false;
-
-  toggle() {
-    this.visible = !this.visible;
-  }
+  parentData = 'I am parent data'
 }

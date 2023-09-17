@@ -1,5 +1,1 @@
-<button (click)="toggle()">Toggle state</button>
-<p *ngIf="visible; else offState">State on</p>
-<ng-template #offState>
-    <p>State off</p>
-</ng-template>
+<app-child [pData]="parentData"></app-child>

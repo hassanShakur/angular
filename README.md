@@ -162,3 +162,39 @@ Used to add properties to the `html`: eg `ngClass` & `ngStyle`.
 <!-- Adding classes => className: condition -->
 <p [ngClass]="{active: isActive === true}"></p>
 ```
+
+### Components Data Sharing
+
+1. Parent - Child Sharing
+
+    In parent component:
+
+    - `ts`:
+
+      ```ts
+      export class ServerComponent {
+        parentData = "Some parent data";
+      }
+      ```
+
+    - `html`:
+
+      ```html
+      <app-child [pData]="parentData"></app-child>
+      ```
+
+    In child component (with selector 'app-child'):
+
+    - `ts`:
+
+      ```ts
+      export class ChildComponent {
+        @Input('pData') parentData: string | undefined;
+      }
+      ```
+
+    - `html`:
+
+      ```html
+      <p>{{ parentData }} from child!</p>
+      ```
