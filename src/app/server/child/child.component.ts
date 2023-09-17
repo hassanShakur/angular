@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-child',
@@ -6,5 +6,11 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./child.component.scss'],
 })
 export class ChildComponent {
-  @Input('pData') parentData: string | undefined;
+  @Output() createChildData = new EventEmitter<string>();
+
+  constructor() {
+    setTimeout(() => {
+      this.createChildData.emit('Data from child');
+    }, 2000);
+  }
 }

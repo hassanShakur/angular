@@ -1,1 +1,2 @@
-<app-child [pData]="parentData"></app-child>
+<app-child (createChildData)="childDataCreated($event)"></app-child>
+<p>{{kidData}} from parent</p>

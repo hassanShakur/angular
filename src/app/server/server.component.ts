@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./server.component.scss'],
 })
 export class ServerComponent {
-  parentData = 'I am parent data'
+  kidData = ''
+
+  childDataCreated(kidData: string) {
+    this.kidData = kidData;
+  }
 }

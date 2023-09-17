@@ -167,34 +167,79 @@ Used to add properties to the `html`: eg `ngClass` & `ngStyle`.
 
 1. Parent - Child Sharing
 
-    In parent component:
+   In parent component:
 
-    - `ts`:
+   - `ts`:
 
-      ```ts
-      export class ServerComponent {
-        parentData = "Some parent data";
-      }
-      ```
+     ```ts
+     export class ParentComponent {
+       parentData = "Some parent data";
+     }
+     ```
 
-    - `html`:
+   - `html`:
 
-      ```html
-      <app-child [pData]="parentData"></app-child>
-      ```
+     ```html
+     <app-child [pData]="parentData"></app-child>
+     ```
 
-    In child component (with selector 'app-child'):
+   In child component (with selector 'app-child'):
 
-    - `ts`:
+   - `ts`:
 
-      ```ts
-      export class ChildComponent {
-        @Input('pData') parentData: string | undefined;
-      }
-      ```
+     ```ts
+     export class ChildComponent {
+       @Input("pData") parentData: string | undefined;
+     }
+     ```
 
-    - `html`:
+   - `html`:
 
-      ```html
-      <p>{{ parentData }} from child!</p>
-      ```
+     ```html
+     <p>{{ parentData }} from child!</p>
+     ```
+
+2. Child - Parent Sharing
+
+   In child component:
+
+   - `ts`:
+
+     ```ts
+     export class ChildComponent {
+       @Output() createChildData = new EventEmitter<string>();
+
+       constructor() {
+         setTimeout(() => {
+           this.createChildData.emit("Data from child");
+         }, 2000);
+       }
+     }
+     ```
+
+   - `html`:
+
+     ```html
+     <p>child component!</p>
+     ```
+
+   In parent component:
+
+   - `ts`:
+
+     ```ts
+     export class ParentComponent {
+       kidData = "";
+
+       childDataCreated(kidData: string) {
+         this.kidData = kidData;
+       }
+     }
+     ```
+
+   - `html`:
+
+     ```html
+     <app-child (createChildData)="childDataCreated($event)"></app-child>
+     <p>{{kidData}} from parent</p>
+     ```
