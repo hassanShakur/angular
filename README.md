@@ -115,30 +115,50 @@ Then in the `html`:
 These are kind of instructions to do a piece of task. Eg for conditional rendering:
 In `html`:
 
+#### Structural - They change the DOM
+
+1. \*ngIf
+
+   ```html
+   <button (click)="toggle()">Toggle state</button>
+   <p *ngIf="visible">State on</p>
+   <p *ngIf="!visible">State off</p>
+   ```
+
+   Or:
+
+   ```html
+   <button (click)="isVisible = !isVisible">Toggle state</button>
+   <p *ngIf="isVisible; else offState">State on</p>
+   <ng-template #offState>
+     <p>State off</p>
+   </ng-template>
+   ```
+
+   And `ts`:
+
+   ```ts
+   export class MyComponent {
+     isVisible = false;
+   }
+   ```
+
+2. \*ngFor
+
+   ```html
+   <ul>
+     <li *ngFor="let item of myList; let i = index">{{ i }}. {{ item }}</li>
+   </ul>
+   ```
+
+#### Attribute Directives - Don't add or remove elements
+
+Used to add properties to the `html`: eg `ngClass` & `ngStyle`.
+
 ```html
-<button (click)="toggle()">Toggle state</button>
-<p *ngIf="visible">State on</p>
-<p *ngIf="!visible">State off</p>
-```
+<!-- Adding style -->
+<p [ngStyle]="{backgroundColor: isActive ? 'green' : 'red'}"></p>
 
-Or:
-
-```html
-<button (click)="toggle()">Toggle state</button>
-<p *ngIf="visible; else offState">State on</p>
-<ng-template #offState>
-  <p>State off</p>
-</ng-template>
-```
-
-And `ts`:
-
-```ts
-export class MyComponent {
-  visible = false;
-
-  toggle() {
-    this.visible = !this.visible;
-  }
-}
+<!-- Adding classes => className: condition -->
+<p [ngClass]="{active: isActive === true}"></p>
 ```
