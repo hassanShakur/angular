@@ -83,32 +83,32 @@ ng g c componentName
 
 4. Two Way Binding
 
-For this ensure in the `app.module.ts`, `FormsModule` is imported:
+   For this ensure in the `app.module.ts`, `FormsModule` is imported:
 
-```ts
-import { FormsModule } from "@angular/forms";
+   ```ts
+   import { FormsModule } from "@angular/forms";
 
-// And later
-imports: [
-    BrowserModule,
-    FormsModule // <-- import the FormsModule before binding with [(ngModel)]
-  ],
-```
+   // And later
+   imports: [
+     BrowserModule,
+     FormsModule, // <-- import the FormsModule before binding with [(ngModel)]
+   ];
+   ```
 
-In the `ts`:
+   In the `ts`:
 
-```ts
-export class MyComponent {
-  myEmail = "a@b.c";
-}
-```
+   ```ts
+   export class MyComponent {
+     myEmail = "a@b.c";
+   }
+   ```
 
-Then in the `html`:
+   Then in the `html`:
 
-```html
-<input type="email" id="email" [(ngModel)]="myEmail" />
-<p>You entered: {{ myEmail }}</p>
-```
+   ```html
+   <input type="email" id="email" [(ngModel)]="myEmail" />
+   <p>You entered: {{ myEmail }}</p>
+   ```
 
 ### Directives
 
@@ -281,42 +281,61 @@ export class AppComponent {}
 
 ### Basic Directive
 
-In this example I'll just add some styling to the target element.
-In a component folder to use the directive, or anywhere really:
+1. Using an ElementRef
 
-In the file: `fileName.directive.ts`:
+   In this example I'll just add some styling to the target element.
+   In a component folder to use the directive, or anywhere really:
 
-```ts
-import { Directive, ElementRef } from "@angular/core";
+   In the file: `fileName.directive.ts`:
 
-@Directive({
-  // Name to be called to activate the directive
-  selector: "[sampleDirective]",
-})
-class SampleDirective {
-  constructor(targetEl: ElementRef) {
-    targetEl.nativeElement.style.color = "red";
-  }
-}
+   ```ts
+   import { Directive, ElementRef } from "@angular/core";
 
-export default SampleDirective;
-```
+   @Directive({
+     // Name to be called to activate the directive => In this case, attribute seletor
+     selector: "[sampleDirective]",
+   })
+   class SampleDirective {
+     constructor(private targetEl: ElementRef) {
+       targetEl.nativeElement.style.color = "red";
+     }
+   }
 
-Remember to include it in the `app.module.ts`:
+   export default SampleDirective;
+   ```
 
-```ts
-@NgModule({
-  declarations: [
-    // Other components
-    SampleDirective,
-  ],
-  // Other imports
-})
-export class AppModule {}
-```
+   Remember to include it in the `app.module.ts`:
 
-Then in the `html` to apply directive:
+   ```ts
+   @NgModule({
+     declarations: [
+       // Other components
+       SampleDirective,
+     ],
+     // Other imports
+   })
+   export class AppModule {}
+   ```
 
-```html
-<p sampleDirective>Directive styled!!!</p>
-```
+   Then in the `html` to apply directive:
+
+   ```html
+   <p sampleDirective>Directive styled!!!</p>
+   ```
+
+2. Using a Renderer
+
+   The decorator can also be made this way:
+
+   ```ts
+   import { Directive, ElementRef, Renderer2 } from "@angular/core";
+
+   @Directive({
+     selector: "[sampleDirective]",
+   })
+   class SampleDirective {
+     constructor(private targetEl: ElementRef, private renderer: Renderer2) {
+       this.renderer.setStyle(this.targetEl.nativeElement, "color", "green");
+     }
+   }
+   ```
