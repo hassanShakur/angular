@@ -1,18 +1,23 @@
-import { Directive, ElementRef, Renderer2, HostListener } from '@angular/core';
+import {
+  Directive,
+  ElementRef,
+  Renderer2,
+  HostListener,
+  HostBinding,
+} from '@angular/core';
 
 @Directive({
   selector: '[sampleDirective]',
 })
 class SampleDirective {
-  constructor(private targetEl: ElementRef, private renderer: Renderer2) {
-  }
+  @HostBinding('style.backgroundColor') bg: string = 'white';
 
   @HostListener('mouseenter') mouseHasEnter(e: Event) {
-    this.renderer.setStyle(this.targetEl.nativeElement, 'background-color', 'green');
+    this.bg = 'green';
   }
 
   @HostListener('mouseleave') mouseHasLeft(e: Event) {
-    this.renderer.setStyle(this.targetEl.nativeElement, 'background-color', 'transparent');
+    this.bg = 'transparent';
   }
 }
 

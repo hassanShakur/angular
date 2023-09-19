@@ -340,7 +340,7 @@ export class AppComponent {}
    }
    ```
 
-3. Listening to DOM events
+3. Listening to DOM events - `@HostListener`
 
    The directives can also implement `HostListener`s.
 
@@ -356,6 +356,22 @@ export class AppComponent {}
 
      @HostListener("mouseleave") mouseHasLeft(e: Event) {
        this.renderer.setStyle(this.el.nativeElement, "background-color", "transparent");
+     }
+   }
+   ```
+
+4. Applying styles - `@HostBinding`
+
+   ```ts
+   class SampleDirective {
+     @HostBinding("style.backgroundColor") bg: string = "white";
+
+     @HostListener("mouseenter") mouseHasEnter(e: Event) {
+       this.bg = "green";
+     }
+
+     @HostListener("mouseleave") mouseHasLeft(e: Event) {
+       this.bg = "transparent";
      }
    }
    ```
