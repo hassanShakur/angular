@@ -151,6 +151,27 @@ In `html`:
    </ul>
    ```
 
+3. ngContent
+
+   Enables rendering of html passed between a component's selector from the component itself at a specified location:
+
+   In parent `html`:
+
+   ```html
+   <app-child>
+     <p>Content beween child tags</p>
+   </app-child>
+   ```
+
+   In child `html`:
+
+   ```html
+   <div>
+     <p>Child component</p>
+     <ng-content></ng-content>
+   </div>
+   ```
+
 #### Attribute Directives - Don't add or remove elements
 
 Used to add properties to the `html`: eg `ngClass` & `ngStyle`.
@@ -243,3 +264,17 @@ Used to add properties to the `html`: eg `ngClass` & `ngStyle`.
      <app-child (createChildData)="childDataCreated($event)"></app-child>
      <p>{{kidData}} from parent</p>
      ```
+
+### View Encapsulation
+
+This is where angular adds unique attributes to each component elements so styles used by that component only affect the component itself. You can disavle this default behaviour in through:
+
+```ts
+import { Component, ViewEncapsulation } from "@angular/core";
+
+@Component({
+  // ... Other settings
+  encapsulation: ViewEncapsulation.None,
+})
+export class AppComponent {}
+```
