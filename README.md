@@ -278,3 +278,45 @@ import { Component, ViewEncapsulation } from "@angular/core";
 })
 export class AppComponent {}
 ```
+
+### Basic Directive
+
+In this example I'll just add some styling to the target element.
+In a component folder to use the directive, or anywhere really:
+
+In the file: `fileName.directive.ts`:
+
+```ts
+import { Directive, ElementRef } from "@angular/core";
+
+@Directive({
+  // Name to be called to activate the directive
+  selector: "[sampleDirective]",
+})
+class SampleDirective {
+  constructor(targetEl: ElementRef) {
+    targetEl.nativeElement.style.color = "red";
+  }
+}
+
+export default SampleDirective;
+```
+
+Remember to include it in the `app.module.ts`:
+
+```ts
+@NgModule({
+  declarations: [
+    // Other components
+    SampleDirective,
+  ],
+  // Other imports
+})
+export class AppModule {}
+```
+
+Then in the `html` to apply directive:
+
+```html
+<p sampleDirective>Directive styled!!!</p>
+```
