@@ -325,7 +325,7 @@ export class AppComponent {}
 
 2. Using a Renderer
 
-   The decorator can also be made this way:
+   The directive can also be made this way (Prefered version for DOM access):
 
    ```ts
    import { Directive, ElementRef, Renderer2 } from "@angular/core";
@@ -336,6 +336,26 @@ export class AppComponent {}
    class SampleDirective {
      constructor(private targetEl: ElementRef, private renderer: Renderer2) {
        this.renderer.setStyle(this.targetEl.nativeElement, "color", "green");
+     }
+   }
+   ```
+
+3. Listening to DOM events
+
+   The directives can also implement `HostListener`s.
+
+   ```ts
+   import { Directive, ElementRef, Renderer2, HostListener } from "@angular/core";
+
+   class SampleDirective {
+     constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+     @HostListener("mouseenter") mouseHasEnter(e: Event) {
+       this.renderer.setStyle(this.el.nativeElement, "background-color", "green");
+     }
+
+     @HostListener("mouseleave") mouseHasLeft(e: Event) {
+       this.renderer.setStyle(this.el.nativeElement, "background-color", "transparent");
      }
    }
    ```
