@@ -279,7 +279,9 @@ import { Component, ViewEncapsulation } from "@angular/core";
 export class AppComponent {}
 ```
 
-### Basic Directive
+### Basic Directives
+
+#### Attribute Directives
 
 1. Using an ElementRef
 
@@ -375,3 +377,45 @@ export class AppComponent {}
      }
    }
    ```
+
+#### Structural Directives
+
+This example shows conditional template rendering. Start by creating the directive in a file say `only-when.directive.ts`:
+
+```ts
+import { Directive, Input, TemplateRef, ViewContainerRef } from "@angular/core";
+
+@Directive({
+  // Property binding
+  selector: "[appOnlyWhen]",
+})
+export class OnlyWhenDirective {
+  // Use a setter
+  @Input() set appOnlyWhen(condition: boolean) {
+    if (condition) {
+      // Add item to dom if condition is true
+      this.vcRef.createEmbeddedView(this.templateRef);
+    } else {
+      // Destroy all views in the container binded to
+      this.vcRef.clear();
+    }
+  }
+
+  constructor(private templateRef: TemplateRef<any>, private vcRef: ViewContainerRef) {}
+}
+```
+
+Then in the component to use it:
+
+```ts
+export class MyComponent {
+  // Any condition
+  display = true;
+}
+```
+
+& html:
+
+```html
+<p *appOnlyWhen="display">I am visible only when display = true</p>
+```

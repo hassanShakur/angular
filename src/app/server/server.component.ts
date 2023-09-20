@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./server.component.scss'],
 })
 export class ServerComponent {
-  
+  display = true
 }
