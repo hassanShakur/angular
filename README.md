@@ -2,10 +2,16 @@
 
 ## Basics
 
-### Initialize a component using:
+Initialize a component using:
 
 ```sh
 ng g c componentName
+```
+
+A directive:
+
+```sh
+ng g d directive-name
 ```
 
 ### Data Binding
@@ -169,6 +175,19 @@ In `html`:
    <div>
      <p>Child component</p>
      <ng-content></ng-content>
+   </div>
+   ```
+
+4. ngSwitch
+
+   Offers the `switch-case` logic. Suppose the component has a `val` attribute:
+
+   ```html
+   <div [ngSwitch]="val">
+     <p *ngSwitchCase="1">Val is 1</p>
+     <p *ngSwitchCase="2">Val is 2</p>
+     <p *ngSwitchCase="3">Val is 3</p>
+     <p *ngSwitchDefault>Val is 5</p>
    </div>
    ```
 
