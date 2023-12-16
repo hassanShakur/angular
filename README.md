@@ -445,14 +445,45 @@ export class MyComponent {
 
 ### Component Lifecycle
 
+Be sure to show that the component implements the lifecycle interface:
+
+```ts
+import { Component, OnInit } from "@angular/core";
+
+@Component({
+  // ...
+})
+export class MyComponent implements OnInit {
+  constructor() {}
+
+  ngOnInit(): void {}
+}
+```
+
 1. ngOnChanges
 
    This is called when a bound input property (`@Input()`) changes. It is called before ngOnInit and whenever one or more data-bound input properties change.
-   
+
    ```ts
+   // import { SimpleChanges } from "@angular/core";
     ngOnChanges(changes: SimpleChanges) {
       console.log(changes);
     }
-    ```
+   ```
 
 2. ngOnInit
+
+   This is called once the component is initialized. It is called after the first ngOnChanges.
+
+   ```ts
+   ngOnInit(): void {
+     console.log("ngOnInit");
+   }
+   ```
+
+3. ngDoCheck - This is called during every change detection run. It is called after ngOnChanges, ngOnInit, and any other DOM change detected by Angular.
+4. ngAfterContentInit - This is called after Angular projects external content into the component's view, or into the view that a directive is in.
+5. ngAfterContentChecked - This is called every time the projected content has been checked.
+6. ngAfterViewInit - This is called after Angular initializes the component's views and child views, or the view that contains the directive.
+7. ngAfterViewChecked - This is called every time the view and child views have been checked.
+8. ngOnDestroy - This is called once the component is about to be destroyed.
