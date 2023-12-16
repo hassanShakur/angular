@@ -440,3 +440,19 @@ export class MyComponent {
 ```html
 <p *appOnlyWhen="display">I am visible only when display = true</p>
 ```
+
+## Intermediate
+
+### Component Lifecycle
+
+1. ngOnChanges
+
+   This is called when a bound input property (`@Input()`) changes. It is called before ngOnInit and whenever one or more data-bound input properties change.
+   
+   ```ts
+    ngOnChanges(changes: SimpleChanges) {
+      console.log(changes);
+    }
+    ```
+
+2. ngOnInit
