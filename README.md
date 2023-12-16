@@ -229,6 +229,8 @@ Used to add properties to the `html`: eg `ngClass` & `ngStyle`.
 
      ```ts
      export class ChildComponent {
+       // Here the 'pData' is an alias that allows this property to be called this way outside this component when binding. But inside this component it is 'parentData'
+
        @Input("pData") parentData: string | undefined;
      }
      ```
@@ -286,7 +288,7 @@ Used to add properties to the `html`: eg `ngClass` & `ngStyle`.
 
 ### View Encapsulation
 
-This is where angular adds unique attributes to each component elements so styles used by that component only affect the component itself. You can disavle this default behaviour in through:
+This is where angular adds unique attributes to each component elements so styles used by that component only affect the component itself. You can disable this default behaviour in through:
 
 ```ts
 import { Component, ViewEncapsulation } from "@angular/core";
@@ -298,7 +300,7 @@ import { Component, ViewEncapsulation } from "@angular/core";
 export class AppComponent {}
 ```
 
-### Basic Directives
+### Creating Basic Directives
 
 #### Attribute Directives
 
