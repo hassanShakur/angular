@@ -440,3 +440,4 @@ export class MyComponent {
 ```html
 <p *appOnlyWhen="display">I am visible only when display = true</p>
 ```
+
