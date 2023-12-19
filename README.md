@@ -484,6 +484,6 @@ export class MyComponent implements OnInit {
 3. ngDoCheck - This is called during every change detection run. It is called after ngOnChanges, ngOnInit, and any other DOM change detected by Angular.
 4. ngAfterContentInit - This is called after Angular projects external content into the component's view, or into the view that a directive is in.
 5. ngAfterContentChecked - This is called every time the projected content has been checked.
-6. ngAfterViewInit - This is called after Angular initializes the component's views and child views, or the view that contains the directive.
+6. ngAfterViewInit - This is called after Angular initializes the component's views and child views, or the view that contains the directive. Before this, elements referenced in the component's template aren't yet available.
 7. ngAfterViewChecked - This is called every time the view and child views have been checked.
 8. ngOnDestroy - This is called once the component is about to be destroyed.
