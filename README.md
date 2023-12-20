@@ -528,3 +528,43 @@ export class MyComponent {
 ```
 
 The `@Injectable()` decorator can be used in a service that uses a service in it (`injected`). This is done same as in components where you create a constructor that receives the service to be used as parameter. **The only catch is that to make a service injectable with another service, the service used to inject must be defined in the `providers` of the `app.module.ts`, otherwise it won't work.**
+
+#### Cross Component Communication with Services
+
+This can be done through emitting and subscribing to service events in the app. Say we have a messages service and we want to trigger a notification from one component and capture it in another.
+
+In the `messages service`:
+
+```ts
+import { EventEmitter } from "@angular/core";
+
+class MessagesService {
+  notification = new EventEmitter<string>();
+}
+```
+
+In component to `emit` the notification:
+
+```ts
+class EmitterComponent {
+  constructor(private msgService: MessagesService){}
+
+  // somewhere in a function
+  this.msgService.notification.emit('Good morning')
+}
+```
+
+Then in the `subscriber` component:
+
+```ts
+class ListenerComponent {
+  constructor(private msgService: MessagesService){}
+
+  // somewhere in a function
+  this.msgService.notification.subscribe((msg: string)=>{
+    // do something with the message
+  })
+}
+```
+
+### Routing
