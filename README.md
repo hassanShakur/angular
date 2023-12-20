@@ -487,3 +487,35 @@ export class MyComponent implements OnInit {
 6. ngAfterViewInit - This is called after Angular initializes the component's views and child views, or the view that contains the directive. Before this, elements referenced in the component's template aren't yet available.
 7. ngAfterViewChecked - This is called every time the view and child views have been checked.
 8. ngOnDestroy - This is called once the component is about to be destroyed.
+
+### Services
+
+These are classes that can be used to share data between components. They are created using:
+
+```sh
+ng g s services/service-name
+```
+
+They are added to the `app.module.ts`:
+
+```ts
+import { ServiceNameService } from "./services/service-name.service";
+
+@NgModule({
+  // ...
+  providers: [ServiceNameService],
+})
+export class AppModule {}
+```
+
+Then in the component to use it:
+
+```ts
+import { ServiceNameService } from "./services/service-name.service";
+
+export class MyComponent {
+  constructor(private serviceName: ServiceNameService) {}
+}
+```
+
+### Routing
