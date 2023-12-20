@@ -496,6 +496,15 @@ These are classes that can be used to share data between components. They are cr
 ng g s services/service-name
 ```
 
+The service can look something like this - just like any other class:
+
+```ts
+import { Injectable } from "@anular/core";
+
+@Injectable() // also enables injecting a service in another service
+class ServiceNameService {}
+```
+
 They are added to the `app.module.ts`:
 
 ```ts
@@ -518,4 +527,4 @@ export class MyComponent {
 }
 ```
 
-### Routing
+The `@Injectable()` decorator can be used in a service that uses a service in it (`injected`). This is done same as in components where you create a constructor that receives the service to be used as parameter. **The only catch is that to make a service injectable with another service, the service used to inject must be defined in the `providers` of the `app.module.ts`, otherwise it won't work.**
