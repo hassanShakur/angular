@@ -716,3 +716,12 @@ const appRoutes: Routes = [
 ```
 
 Remember to add an `outlet` for the router in the parent component for the nested routes.
+
+#### Redirection & Wildcards
+
+```ts
+{ path: "404", component: NotFoundComponent }
+
+// has to be the last route to handle all unhandled routes
+{ path: "**", redirectTo: '/404' }
+```
