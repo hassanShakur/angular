@@ -794,3 +794,27 @@ import { CanDeactivateGuard } from "./can-deactivate-guard.service";
 
 const appRoutes: Routes = [{ path: "users", canDeactivate: [CanDeactivateGuard] }];
 ```
+
+#### Passing Static Data to a Route
+
+This can be done by adding a `data` prop to the route:
+
+```ts
+const appRoutes: Routes = [{ path: "users", component: UsersComponent, data: { message: "Hello" } }];
+```
+
+Then in the component, the data can be accessed through the `ActivatedRoute`:
+
+```ts
+import { ActivatedRoute } from "@angular/router";
+
+class UsersComponent {
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.data.subscribe((data) => {
+      console.log(data);
+    });
+  }
+}
+```
