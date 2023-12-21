@@ -637,3 +637,33 @@ export class MyComponent {
   }
 }
 ```
+
+#### Active Route Observation
+
+Programmatic navigation from a route say `/users/:name1` to `/users/:name2` does not trigger the component rerendering. Therefore the specific component has to listen to these changes and update accordingly as below:
+
+```ts
+export class UserComponent implements OnInit {
+  userName: string = "";
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  // ensure you use an arrow function
+  paramsObserver = (params: Params) => {
+    this.userName = params["userName"];
+  };
+
+  ngOnInit(): void {
+    // setting initia name from the route specified as 'users/:userName'
+    this.userName = this.route.snapshot.params["userName"];
+  }
+
+  goToUser(name: string) {
+    this.router.navigate(["users", name]);
+
+    // active checking when the path changes
+    this.route.params.subscribe(this.paramsObserver);
+  }
+}
+```
+
+Ensure the observer uses an arrow function due to how the `this` keyword works in different occasions. This approach is only necessary when component reload from the same page is possible. Otherwise you don't need to subscribe.

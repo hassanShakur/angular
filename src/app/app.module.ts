@@ -9,9 +9,11 @@ import { AboutComponent } from './about/about.component';
 import { PricingComponent } from './pricing/pricing.component';
 import { HeaderComponent } from './header/header.component';
 import { RouterModule, Routes } from '@angular/router';
+import { UserComponent } from './home/user/user.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'users/:userName', component: UserComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'about', component: AboutComponent },
 ];
@@ -24,6 +26,7 @@ const appRoutes: Routes = [
     AboutComponent,
     PricingComponent,
     HeaderComponent,
+    UserComponent,
   ],
   imports: [BrowserModule, FormsModule, RouterModule.forRoot(appRoutes)],
   providers: [],

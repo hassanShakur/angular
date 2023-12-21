@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(private router: Router) {}
 
-  onGoToPricing() {
-    this.router.navigate(['pricing'], { relativeTo: this.route });
+  onGoToUsers() {
+    this.router.navigate(['users/testUser']);
   }
 }
