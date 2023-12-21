@@ -667,3 +667,31 @@ export class UserComponent implements OnInit {
 ```
 
 Ensure the observer uses an arrow function due to how the `this` keyword works in different occasions. This approach is only necessary when component reload from the same page is possible. Otherwise you don't need to subscribe.
+
+#### Query Params(?) & Fragments(#)
+
+These can be set from the `html` or `ts`. Example, to navigate to `/home?auth=true#loading`, we could:
+
+```html
+<a routerLink="/home" [queryParams]="{auth: true}" fragment="loading">Some link</a>
+```
+
+or
+
+```ts
+this.router.navigate(["home"], {
+  queryParams: { auth: true },
+  fragment: "loading",
+});
+```
+
+Then they can be accessed similar to the dynamic routes and also sibscribed to:
+
+```ts
+this.route.snapshot.queryParams;
+this.route.snapshot.fragment;
+
+// subscribe
+this.route.queryParams.subscribe();
+this.route.fragment.subscribe();
+```

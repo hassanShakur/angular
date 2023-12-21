@@ -12,7 +12,7 @@ export class UserComponent implements OnInit {
 
   paramsObserver = (params: Params) => {
     this.userName = params['userName'];
-  }
+  };
 
   ngOnInit(): void {
     this.userName = this.route.snapshot.params['userName'];
