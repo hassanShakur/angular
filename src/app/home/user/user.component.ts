@@ -19,7 +19,7 @@ export class UserComponent implements OnInit {
   }
 
   goToUser(name: string) {
-    this.router.navigate(['users', name]);
+    this.router.navigate(['users', name], {queryParamsHandling: 'preserve'});
 
     this.route.params.subscribe(this.paramsObserver);
   }

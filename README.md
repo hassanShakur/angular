@@ -695,3 +695,24 @@ this.route.snapshot.fragment;
 this.route.queryParams.subscribe();
 this.route.fragment.subscribe();
 ```
+
+To conserve/still have the params and fragment in the url even after navigation, use the `queryParamsHandling`, which can either be set to `preserve` or `merge`:
+
+```ts
+this.router.navigate(["some/place"], { queryParamsHandling: "preserve" });
+```
+
+#### Nested Routes
+
+Added using the `children` prop where routes are defined:
+
+```ts
+// in app.module.ts
+const appRoutes: Routes = [
+  { path: "users", component: UsersComponent, children: [
+    path: ':id', component: UserComponent
+  ] },
+];
+```
+
+Remember to add an `outlet` for the router in the parent component for the nested routes.
