@@ -625,3 +625,15 @@ export class MyComponent {
   }
 }
 ```
+
+The navigator always moves relative to the `root`. To include relative programmatic navigation, do something like this:
+
+```ts
+export class MyComponent {
+  constructor(private router: Router, private route: ActivatedRoute) {}
+
+  onGoToPricing() {
+    this.router.navigate(["pricing"], { relativeTo: this.route });
+  }
+}
+```
