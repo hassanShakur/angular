@@ -800,7 +800,9 @@ const appRoutes: Routes = [{ path: "users", canDeactivate: [CanDeactivateGuard] 
 This can be done by adding a `data` prop to the route:
 
 ```ts
-const appRoutes: Routes = [{ path: "users", component: UsersComponent, data: { message: "Hello" } }];
+const appRoutes: Routes = [
+  { path: 'users', component: UsersComponent, data: { message: 'Hello' } },
+];
 ```
 
 Then in the component, the data can be accessed through the `ActivatedRoute`:
@@ -814,6 +816,61 @@ class UsersComponent {
   ngOnInit() {
     this.route.data.subscribe((data) => {
       console.log(data);
+    });
+  }
+}
+```
+
+#### Resolving Dynamic Data with the resolve Guard
+
+This is a service that can be used to resolve dynamic data before a route is loaded.
+
+```ts
+import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from "@angular/router";
+import { Observable } from "rxjs";
+
+interface Person {
+  id: number;
+  name: string;,
+}
+
+class PersonResolver implements Resolve<Person> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<Person> | Promise<Person> | Person {
+    // logic to fetch the item
+    return this.personService.getPerson(route.params['id']);
+  }
+}
+
+```
+
+Then in the `app.module.ts`:
+
+```ts
+import { PersonResolver } from "./person-resolver.service";
+
+const appRoutes: Routes = [
+  {
+    path: "person/:id",
+    component: PersonComponent,
+    resolve: { person: PersonResolver },
+  },
+];
+```
+
+Then in the component, the data can be accessed through the `ActivatedRoute`:
+
+```ts
+import { ActivatedRoute } from "@angular/router";
+
+class PersonComponent {
+  constructor(private route: ActivatedRoute) {}
+
+  ngOnInit() {
+    this.route.data.subscribe((personData) => {
+      console.log(personData);
     });
   }
 }
