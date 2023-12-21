@@ -725,3 +725,72 @@ Remember to add an `outlet` for the router in the parent component for the neste
 // has to be the last route to handle all unhandled routes
 { path: "**", redirectTo: '/404' }
 ```
+
+#### Route Protection with CanActivate and CanActivateChild Guards
+
+This is a service that can be used to protect routes or child routes given a condition say if user is authenticated.
+
+```ts
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
+import { Observable } from "rxjs";
+
+class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    return this.authService.isAuthenticated().then((authenticated: boolean) => {
+      if (authenticated) {
+        return true;
+      } else {
+        this.router.navigate(['/']);
+      }
+    });
+  }
+}
+
+```
+
+Then in the `app.module.ts`:
+
+```ts
+import { AuthGuard } from "./auth-guard.service";
+
+const appRoutes: Routes = [{ path: "users", canActivate: [AuthGuard] }];
+```
+
+#### Route Protection with CanDeactivate Guard
+
+This is a service that can be used to protect routes from being left given a condition say if user has unsaved changes.
+
+```ts
+import {
+  CanDeactivate,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  Router,
+} from '@angular/router';
+import { Observable } from 'rxjs';
+
+class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
+  canDeactivate(
+    component: CanComponentDeactivate,
+    currentRoute: ActivatedRouteSnapshot,
+    currentState: RouterStateSnapshot,
+    nextState?: RouterStateSnapshot
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    return component.canDeactivate();
+  }
+}
+
+```
+
+Then in the `app.module.ts`:
+
+```ts
+import { CanDeactivateGuard } from "./can-deactivate-guard.service";
+
+const appRoutes: Routes = [{ path: "users", canDeactivate: [CanDeactivateGuard] }];
+```
