@@ -609,3 +609,19 @@ Finally create the links in the `header` component:
 ```
 
 **Note:** The `routerLinkActive` sets a class you specified to any link that is currently displayed by the router. Then the `[routerLinkActiveOptions]="{ exact: true }` is used to make the base route active only if the router is an exact match of only `/`.
+
+#### Programmatic Navigation
+
+In the component to trigger the navigation:
+
+```ts
+import { Router } from "@angular/router";
+
+export class MyComponent {
+  constructor(private router: Router) {}
+
+  onGoToPricing() {
+    this.router.navigate(["pricing"]); // the array can be used to add nested routes
+  }
+}
+```
