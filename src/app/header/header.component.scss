@@ -1,0 +1,22 @@
+a {
+  color: unset;
+  text-decoration: unset;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  gap: 1rem;
+  background-color: rgb(238, 254, 255);
+}
+
+li {
+  padding: 0.5rem 2rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.active {
+  color: #fff;
+  background-color: burlywood;
+}

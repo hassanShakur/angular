@@ -13,6 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'pricing', component: PricingComponent},
+  {path: 'about', component: AboutComponent},
 ]
 
 @NgModule({
