@@ -568,3 +568,44 @@ class ListenerComponent {
 ```
 
 ### Routing
+
+First create the routes and register them in the `app.module`:
+
+```ts
+import { RouterModule, Routes } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'pricing', component: PricingComponent },
+  { path: 'about', component: AboutComponent },
+];
+
+@NgModules({
+  imports: [
+    // ...
+    RouterModule.forRoot(appRoutes)
+  ]
+})
+```
+
+Create the location where the router is to inject the specified components in the routes:
+
+```html
+<!-- app.component.html -->
+<app-header></app-header>
+<router-outlet></router-outlet>
+```
+
+Finally create the links in the `header` component:
+
+```html
+<ul>
+  <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <a routerLink="/">Home</a>
+  </li>
+  <li routerLinkActive="active"><a routerLink="/pricing">Pricing</a></li>
+  <li routerLinkActive="active"><a routerLink="/about">About</a></li>
+</ul>
+```
+
+**Note:** The `routerLinkActive` sets a class you specified to any link that is currently displayed by the router. Then the `[routerLinkActiveOptions]="{ exact: true }` is used to make the base route active only if the router is an exact match of only `/`.

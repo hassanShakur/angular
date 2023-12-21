@@ -11,10 +11,10 @@ import { HeaderComponent } from './header/header.component';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'pricing', component: PricingComponent},
-  {path: 'about', component: AboutComponent},
-]
+  { path: '', component: HomeComponent },
+  { path: 'pricing', component: PricingComponent },
+  { path: 'about', component: AboutComponent },
+];
 
 @NgModule({
   declarations: [
@@ -25,12 +25,8 @@ const appRoutes: Routes = [
     PricingComponent,
     HeaderComponent,
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    RouterModule.forRoot(appRoutes),
-  ],
+  imports: [BrowserModule, FormsModule, RouterModule.forRoot(appRoutes)],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
