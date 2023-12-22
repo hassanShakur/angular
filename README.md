@@ -896,4 +896,44 @@ The `.error()` of course sends down an error to any subscriber and the `.complet
 
 The `.subscribe()` can take 3 callbacks, 1st for data on `.next()`, 2nd for error on `.error()`, and last for closing on `.complete()`.
 
+#### Subjects
+
+These can be thought as subs for event emitters whenever we are changing data in a `service`. Example:
+
+```ts
+import { Subject } from "rxjs";
+
+class SomeService {
+  // using event emiters
+  myEventEmitter = new EventEmitter<boolean>();
+
+  // using subjects
+  mySubEmitter = new Subject<boolean>();
+}
+```
+
+Instead of using `.emit()`, we now use `.next()` to trigger an event/pass data.
+
+```ts
+// using events
+myEventEmitter.emit("data");
+
+// using subjects
+mySubEmitter.next("data");
+```
+
+Then to use it, do the normal subscription like any other observable. Always remember to cleanup any custom observables like this.
+
+```ts
+private activeSubscription: Subscription;
+
+this.someService.mySubEmitter.subscribe((myBool) => {});
+
+ngOnDestroy(): void {
+  this.activeSubscription.unsubscribe()
+}
+```
+
 #### Lazy Loading
+
+<!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->
