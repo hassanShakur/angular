@@ -737,20 +737,16 @@ import { Observable } from "rxjs";
 class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return this.authService.isAuthenticated().then((authenticated: boolean) => {
       if (authenticated) {
         return true;
       } else {
-        this.router.navigate(['/']);
+        this.router.navigate(["/"]);
       }
     });
   }
 }
-
 ```
 
 Then in the `app.module.ts`:
@@ -766,25 +762,14 @@ const appRoutes: Routes = [{ path: "users", canActivate: [AuthGuard] }];
 This is a service that can be used to protect routes from being left given a condition say if user has unsaved changes.
 
 ```ts
-import {
-  CanDeactivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-} from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanDeactivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from "@angular/router";
+import { Observable } from "rxjs";
 
 class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
-  canDeactivate(
-    component: CanComponentDeactivate,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot
-  ): Observable<boolean> | Promise<boolean> | boolean {
+  canDeactivate(component: CanComponentDeactivate, currentRoute: ActivatedRouteSnapshot, currentState: RouterStateSnapshot, nextState?: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     return component.canDeactivate();
   }
 }
-
 ```
 
 Then in the `app.module.ts`:
@@ -800,9 +785,7 @@ const appRoutes: Routes = [{ path: "users", canDeactivate: [CanDeactivateGuard] 
 This can be done by adding a `data` prop to the route:
 
 ```ts
-const appRoutes: Routes = [
-  { path: 'users', component: UsersComponent, data: { message: 'Hello' } },
-];
+const appRoutes: Routes = [{ path: "users", component: UsersComponent, data: { message: "Hello" } }];
 ```
 
 Then in the component, the data can be accessed through the `ActivatedRoute`:
@@ -875,3 +858,42 @@ class PersonComponent {
   }
 }
 ```
+
+### Observables
+
+Brings in the `subscription` & `unsubscription` patterns. Let's create a custom one:
+
+```ts
+import { Observable } from "rxjs";
+
+customObservable = new Observable((subscriber) => {
+  let count = 0;
+  subscriber.add(() => {
+    console.log("Teardown called!");
+  });
+  setInterval(() => {
+    subscriber.next(count++);
+
+    if (count === 4) subscriber.error(new Error("Error, num is 4!"));
+    if (count === 5) subscriber.complete();
+  }, 1000);
+  return subscriber;
+}).subscribe(
+  (data) => {
+    console.log({ data });
+  },
+  (error) => {
+    console.log({ error });
+  },
+  () => {
+    console.log("Observable completed!");
+  }
+);
+```
+
+The `.add()` defines a `teardown` that is called whenever the subscriber completes, produces an error or resolves to a value - `data`, meaning it is always called at the end. Can be useful for some computations after data fetching is complete.
+The `.error()` of course sends down an error to any subscriber and the `.complete()` clears and closes it.
+
+The `.subscribe()` can take 3 callbacks, 1st for data on `.next()`, 2nd for error on `.error()`, and last for closing on `.complete()`.
+
+#### Lazy Loading
