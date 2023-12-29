@@ -979,6 +979,51 @@ The `@ViewChild()` can be used to access the form object at any point in the com
 
 ##### Form Validation
 
+This can be done using the `required` attribute on the input:
+
+```html
+<input type="email" name="email" id="email" ngModel required #myEmail="ngModel" />
+```
+
+Then to show the error message, we can use the `ngModel` object:
+
+```html
+<p *ngIf="!myEmail.valid && myEmail.touched">Email is required!</p>
+```
+
+You can also add other angular validation attributes like `minlength`, `maxlength`, `pattern` etc, like:
+
+```html
+<input ngModel required email />
+```
+
+You can also use the `ngModel` to set a default value through property binding:
+
+```html
+<input [ngModel]="defaultEmail" />
+```
+
+There's also the `setValue()` and `patchValue()` methods that can be used to set the value of the form. The difference is that `setValue()` requires all the form fields to be set, while `patchValue()` can be used to set only a few fields.
+
+```ts
+// set all fields
+myForm.setValue({
+  email: 'a@b.c',
+  password: '123,
+})
+
+// set only a few fields
+myForm.form.patchValue({
+  email: 'a@b.c'
+})
+```
+
+You can also reset the form using the `reset()` method:
+
+```ts
+myForm.reset();
+```
+
 #### Lazy Loading
 
 <!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->

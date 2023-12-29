@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  @ViewChild('myForm') form: NgForm | undefined;
+  @ViewChild('myForm') form!: NgForm;
   constructor(private router: Router) {}
 
   onGoToUsers() {
