@@ -934,6 +934,51 @@ ngOnDestroy(): void {
 }
 ```
 
+### Forms
+
+#### Template Driven Approach
+
+Let's just look at the code:
+
+```html
+<form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
+  <div>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" ngModel />
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" ngModel />
+  </div>
+
+  <button type="submit">Login</button>
+</form>
+```
+
+`ngSubmit` points to a function that handles form submission. The `#myForm="ngForm"` is necessary to get hold of the form object that `angular` creates for you. All inputs you care about should have both the `name` prop as identifier and `ngModel` for angular to identify them.
+
+Now we can have access to the form object in 2 ways, 1 during submission, and 2 using `@ViewChild()` at any point:
+
+```ts
+import { Component, ViewChild } from "@angular/core";
+import { NgForm } from "@angular/forms";
+
+@Component({
+  // ...
+})
+export class MyComponent {
+  @ViewChild("myForm") myForm!: NgForm;
+
+  onSubmit(form: NgForm) {
+    console.log(form);
+  }
+}
+```
+
+The `@ViewChild()` can be used to access the form object at any point in the component. The `!` is used to tell typescript that the value will be available at runtime.
+
+##### Form Validation
+
 #### Lazy Loading
 
 <!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->

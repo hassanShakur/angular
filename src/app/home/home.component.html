@@ -1,7 +1,22 @@
 <p>home works!</p>
 <button (click)="onGoToUsers()">Go to users</button>
 
-<a routerLink="/home"
-    [queryParams]="{auth: true}"
-    fragment="loading"  
->Some link</a>
+<a routerLink="/home" [queryParams]="{ auth: true }" fragment="loading"
+  >Some link</a
+>
+
+<br>
+<hr>
+
+<form (ngSubmit)="onSubmit(myForm)" #myForm="ngForm">
+  <div>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" ngModel />
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" ngModel />
+  </div>
+
+  <button type="submit">Login</button>
+</form>
