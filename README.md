@@ -1024,6 +1024,54 @@ You can also reset the form using the `reset()` method:
 myForm.reset();
 ```
 
+#### Reactive Approach
+
+This is the preferred approach for large forms. It is also more flexible and powerful. It is also more testable.
+
+```ts
+import { Component, OnInit } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+
+@Component({
+  // ...
+})
+export class MyComponent implements OnInit {
+  myForm!: FormGroup;
+
+  ngOnInit(): void {
+    this.myForm = new FormGroup({
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+    });
+  }
+
+  onSubmit() {
+    console.log(this.myForm);
+  }
+}
+```
+
+**Note:** Remember to add the `ReactiveFormsModule` to the `app.module.ts`:
+
+```ts
+import { ReactiveFormsModule } from "@angular/forms";
+
+@NgModule({
+  imports: [
+    // ...
+    ReactiveFormsModule,
+  ],
+})
+```
+
+The `FormControl` takes 3 arguments, 1st is the default value, 2nd is an array of validators, and 3rd is an array of async validators. The `FormGroup` is used to group the form controls together.
+
+##### Form Validation
+
 #### Lazy Loading
 
 <!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->
+
+```
+
+```
