@@ -1051,22 +1051,32 @@ export class MyComponent implements OnInit {
 }
 ```
 
-**Note:** Remember to add the `ReactiveFormsModule` to the `app.module.ts`:
+You then bind the form to the `html` using the `formGroup` and `formControlName` directives:
 
-```ts
-import { ReactiveFormsModule } from "@angular/forms";
+```html
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" formControlName="email" />
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" formControlName="password" />
+  </div>
 
-@NgModule({
-  imports: [
-    // ...
-    ReactiveFormsModule,
-  ],
-})
+  <button type="submit">Login</button>
+</form>
 ```
+
+**Note:** Remember to add the `ReactiveFormsModule` to the `app.module.ts`.
 
 The `FormControl` takes 3 arguments, 1st is the default value, 2nd is an array of validators, and 3rd is an array of async validators. The `FormGroup` is used to group the form controls together.
 
-##### Form Validation
+Accessing controls in the `html`, use the `form.get()` method:
+
+```html
+<p *ngIf="!myForm.get('email')?.valid && myForm.get('email')?.touched">Email is required!</p>
+```
 
 #### Lazy Loading
 
