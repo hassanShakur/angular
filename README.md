@@ -1078,10 +1078,22 @@ Accessing controls in the `html`, use the `form.get()` method:
 <p *ngIf="!myForm.get('email')?.valid && myForm.get('email')?.touched">Email is required!</p>
 ```
 
+Additionally, you can listen for status and value changes:
+
+```ts
+this.myForm.statusChanges.subscribe((status) => {
+  console.log(status);
+});
+
+this.myForm.valueChanges.subscribe((value) => {
+  console.log(value);
+});
+```
+
 #### Lazy Loading
 
 <!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->
 
-```
+## Advanced
 
-```
+### Pipes
