@@ -1164,3 +1164,31 @@ Pure pipes are those that are only called when the input data changes. They are 
 ```
 
 **Note:** Impure pipes can be expensive and should be used with caution.
+
+#### Async Pipe
+
+This is used to subscribe to observables in the `html` template. Example:
+
+```ts
+import { Component } from "@angular/core";
+import { Observable } from "rxjs";
+
+@Component({
+  // ...
+})
+export class MyComponent {
+  myObservable = new Observable((subscriber) => {
+    setTimeout(() => {
+      subscriber.next("Data from observable");
+    }, 2000);
+  });
+}
+```
+
+Then in the `html`:
+
+```html
+<p>{{ myObservable | async }}</p>
+```
+
+### Http
