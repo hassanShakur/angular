@@ -1151,3 +1151,16 @@ Then in the `html`:
 ```html
 <p>{{ myData | shorten: 10 }}</p>
 ```
+
+#### Pure & Impure Pipes
+
+Pure pipes are those that are only called when the input data changes. They are the default pipes. Impure pipes are those that are called even when the input data doesn't change. They are created by adding the `pure: false` prop to the `@Pipe` decorator:
+
+```ts
+@Pipe({
+  name: "shorten",
+  pure: false,
+})
+```
+
+**Note:** Impure pipes can be expensive and should be used with caution.
