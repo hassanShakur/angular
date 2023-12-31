@@ -1105,3 +1105,49 @@ These are used to transform data in the `html` template. They can be used to tra
 ```
 
 Read more about built-in pipes [here](https://angular.io/api?type=pipe).
+
+#### Custom Pipes
+
+Let's create a custom pipe to shorten a string:
+
+```sh
+ng g p pipes/pipe-name
+```
+
+**Note:** If you create the pipe manually, you have to add it to the `app.module.ts`:
+
+```ts
+import { PipeNamePipe } from "./pipes/pipe-name.pipe";
+
+@NgModule({
+  declarations: [
+    // Other components
+    PipeNamePipe,
+  ],
+  // Other imports
+})
+```
+
+Then in the `pipe-name.pipe.ts`:
+
+```ts
+import { Pipe, PipeTransform } from "@angular/core";
+
+@Pipe({
+  name: "shorten",
+})
+export class ShortenPipe implements PipeTransform {
+  transform(value: any, limit: number) {
+    if (value.length > limit) {
+      return value.substr(0, limit) + "...";
+    }
+    return value;
+  }
+}
+```
+
+Then in the `html`:
+
+```html
+<p>{{ myData | shorten: 10 }}</p>
+```
