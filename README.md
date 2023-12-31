@@ -1097,3 +1097,11 @@ this.myForm.valueChanges.subscribe((value) => {
 ## Advanced
 
 ### Pipes
+
+These are used to transform data in the `html` template. They can be used to transform data in a variety of ways, eg `uppercase`, `date` etc. They can also be used to create custom pipes. An example of say `uppercase`:
+
+```html
+<p>{{ myData | uppercase }}</p>
+```
+
+Read more about built-in pipes [here](https://angular.io/api?type=pipe).
