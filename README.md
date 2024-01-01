@@ -1311,3 +1311,57 @@ this.http.get("https://jsonplaceholder.typicode.com/posts", {
   responseType: "json",
 });
 ```
+
+#### Interceptors
+
+These are used to intercept requests and responses to add some logic eg logging, adding auth headers etc. They are created using:
+
+```sh
+ng g interceptor interceptors/interceptor-name
+```
+
+Then in the `interceptor-name.interceptor.ts`:
+
+```ts
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEventType } from "@angular/common/http";
+import { tap } from "rxjs/operators";
+
+export class InterceptorNameInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler) {
+    console.log("Request is on its way!");
+    console.log(req.url);
+
+    // modify the request
+    const modifiedRequest = req.clone({ headers: req.headers.append("Auth", "xyz") });
+
+    // return the modified request
+    return next.handle(modifiedRequest).pipe(
+      // modify the response
+      tap((event) => {
+        if (event.type === HttpEventType.Response) {
+          console.log("Response arrived, body data:");
+          console.log(event.body);
+        }
+      })
+    );
+  }
+}
+```
+
+Then in the `app.module.ts`:
+
+```ts
+import { InterceptorNameInterceptor } from "./interceptors/interceptor-name.interceptor";
+
+@NgModule({
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptorNameInterceptor,
+      multi: true,
+    },
+  ],
+})
+```
+
+### Authentication
