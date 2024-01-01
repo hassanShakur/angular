@@ -1280,3 +1280,15 @@ export class MyComponent {
 }
 ```
 
+You can also handle the errors via second callback in the `subscribe` method:
+
+```ts
+this.http.get("https://jsonplaceholder.typicode.com/posts").subscribe(
+  (data) => {
+    console.log(data);
+  },
+  (error) => {
+    // do something with the error
+  }
+);
+```
