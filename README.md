@@ -1292,3 +1292,22 @@ this.http.get("https://jsonplaceholder.typicode.com/posts").subscribe(
   }
 );
 ```
+
+#### Setting Headers & Query Params
+
+This can be done by passing an object argument to the http methods:
+
+```ts
+this.http.get("https://jsonplaceholder.typicode.com/posts", {
+  headers: new HttpHeaders({ "Custom-Header": "Hello" }),
+  params: new HttpParams().set("userId", "1"),
+});
+```
+
+You can also set the response type:
+
+```ts
+this.http.get("https://jsonplaceholder.typicode.com/posts", {
+  responseType: "json",
+});
+```
