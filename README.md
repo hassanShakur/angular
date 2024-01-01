@@ -1247,3 +1247,36 @@ export class MyComponent {
 }
 ```
 
+#### Error Handling
+
+This can be done using the `pipe` method:
+
+```ts
+import { HttpClient } from "@angular/common/http";
+import { map, catchError } from "rxjs/operators";
+import { throwError } from "rxjs";
+
+export class MyComponent {
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.http
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .pipe(
+        map((responseData) => {
+          return responseData.map((post: any) => {
+            return { title: post.title.toUpperCase(), body: post.body };
+          });
+        }),
+        catchError((error) => {
+          // do something with the error
+          return throwError(error);
+        })
+      )
+      .subscribe((data) => {
+        console.log(data);
+      });
+  }
+}
+```
+
