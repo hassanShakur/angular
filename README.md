@@ -1192,3 +1192,29 @@ Then in the `html`:
 ```
 
 ### Http
+
+This is used to make http requests to a server. It is used to fetch data:
+
+```ts
+import { HttpClient } from "@angular/common/http";
+
+export class MyComponent {
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.http.get("https://jsonplaceholder.typicode.com/posts").subscribe((data) => {
+      console.log(data);
+    });
+  }
+}
+```
+
+You can configure the http methods to infer the response type:
+
+```ts
+this.http.get<{ title: string; body: string }>("https://jsonplaceholder.typicode.com/posts").subscribe((data) => {
+  console.log(data);
+});
+```
+
+**Note:** Always consider extracting the http calls to a service.
