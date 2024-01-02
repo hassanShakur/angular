@@ -1394,4 +1394,33 @@ export class MyComponent {
 
 The `take(1)` is used to take only the first value from the observable. This helps to avoid multiple requests, or activating multiple subscriptions. The `exhaustMap` is used to map the first observable to the second observable. The `exhaustMap` will ignore any other values from the first observable until the second observable completes.
 
+### BehaviourSubject
 
+This is similar to a `Subject` but it has a default value. It is created using:
+
+```ts
+import { BehaviorSubject } from "rxjs";
+
+myBehaviourSubject = new BehaviorSubject("Default value");
+```
+
+It can be used to share data between components. Example:
+
+```ts
+import { Component } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+
+export class MyComponent {
+  myBehaviourSubject = new BehaviorSubject("Default value");
+
+  ngOnInit(): void {
+    this.myBehaviourSubject.subscribe((data) => {
+      console.log(data);
+    });
+  }
+
+  onClick() {
+    this.myBehaviourSubject.next("New value");
+  }
+}
+```
