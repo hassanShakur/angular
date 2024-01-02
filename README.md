@@ -1364,4 +1364,34 @@ import { InterceptorNameInterceptor } from "./interceptors/interceptor-name.inte
 })
 ```
 
-### Authentication
+### Chain Multiple Observables Using pipe, take & exhaustMap
+
+This is used to chain multiple observables. Example:
+
+```ts
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { exhaustMap, take } from "rxjs/operators";
+
+export class MyComponent {
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.http
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .pipe(
+        take(1),
+        exhaustMap((posts) => {
+          return this.http.get("https://jsonplaceholder.typicode.com/users");
+        })
+      )
+      .subscribe((users) => {
+        console.log(users);
+      });
+  }
+}
+```
+
+The `take(1)` is used to take only the first value from the observable. This helps to avoid multiple requests, or activating multiple subscriptions. The `exhaustMap` is used to map the first observable to the second observable. The `exhaustMap` will ignore any other values from the first observable until the second observable completes.
+
+
