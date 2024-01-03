@@ -1470,4 +1470,60 @@ export class PlaceholderDirective {
 }
 ```
 
+### Creating Router as a Module
+
+This is used to create a module that handles routing. It is created using:
+
+```sh
+ng g m app-routing --flat --module=app
+```
+
+The `--flat` is used to create the module in the `src/app` folder. The `--module=app` is used to register the module in the `app.module.ts`.
+
+Then in the `app-routing.module.ts`:
+
+```ts
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { HomeComponent } from "./home/home.component";
+import { AboutComponent } from "./about/about.component";
+import { PricingComponent } from "./pricing/pricing.component";
+
+const routes: Routes = [
+  { path: "", component: HomeComponent },
+  { path: "pricing", component: PricingComponent },
+  { path: "about", component: AboutComponent },
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
+```
+
+Then in the `app.module.ts`:
+
+```ts
+import { AppRoutingModule } from "./app-routing.module";
+
+@NgModule({
+  imports: [
+    // ...
+    AppRoutingModule,
+  ],
+})
+export class AppModule {}
+```
+
+Then in the `app.component.html`:
+
+```html
+<app-header></app-header>
+<router-outlet></router-outlet>
+```
+
+### Lazy Loading
+
+
 ### NgRx
