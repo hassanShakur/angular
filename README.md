@@ -1424,3 +1424,50 @@ export class MyComponent {
   }
 }
 ```
+
+### Dynamic Components
+
+These are components that are created dynamically via code. They are created using:
+
+```ts
+import { Component, ComponentFactoryResolver, ViewChild } from "@angular/core";
+import { AlertComponent } from "./alert/alert.component";
+import { PlaceholderDirective } from "./placeholder/placeholder.directive";
+
+export class MyComponent {
+  @ViewChild(PlaceholderDirective) alertHost!: PlaceholderDirective;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+
+  ngOnInit(): void {
+    const alertComponentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+
+    // create the component
+    const alertComponentRef = this.alertHost.viewContainerRef.createComponent(alertComponentFactory);
+
+    // set the component properties
+    alertComponentRef.instance.message = "Some message";
+  }
+}
+```
+
+Then in the `html`:
+
+```html
+<ng-template placeholder></ng-template>
+```
+
+The `PlaceholderDirective` is used to mark the location where the component is to be created. It is created using:
+
+```ts
+import { Directive, ViewContainerRef } from "@angular/core";
+
+@Directive({
+  selector: "[placeholder]",
+})
+export class PlaceholderDirective {
+  constructor(public viewContainerRef: ViewContainerRef) {}
+}
+```
+
+### NgRx
