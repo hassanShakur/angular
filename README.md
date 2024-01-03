@@ -1090,10 +1090,6 @@ this.myForm.valueChanges.subscribe((value) => {
 });
 ```
 
-#### Lazy Loading
-
-<!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->
-
 ## Advanced
 
 ### Pipes
@@ -1523,7 +1519,38 @@ Then in the `app.component.html`:
 <router-outlet></router-outlet>
 ```
 
+### Using a Core Module
+
+This is just another module that can be used to hold services and other things that are used throughout the app.
+
 ### Lazy Loading
 
+This is used to load modules only when needed. It is done by adding the `loadChildren` prop to the route:
+
+```ts
+const appRoutes: Routes = [
+  { path: "users", loadChildren: () => import("./users/users.module").then((m) => m.UsersModule) },
+];
+```
+
+The `loadChildren` prop takes a function that returns a promise. The promise is resolved when the module is loaded. The `import` statement is used to import the module. The `m` is the module that is loaded.
+
+You can also `pre-load` the module by adding the `preloadingStrategy` prop to the `RouterModule.forRoot()`. This helps to load the module in the background while the user is still interacting with the app:
+
+```ts
+import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+
+@NgModule({
+  imports: [
+    // ...
+    RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules }),
+  ],
+})
+export class AppModule {}
+```
+
+### Angular Universal
 
 ### NgRx
+
+<!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->
