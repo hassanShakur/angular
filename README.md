@@ -1595,6 +1595,16 @@ mySignal = signal(1);
 myComputed = computed(() =>  this.mySignal() + 1)
 ```
 
+Effects run some code when a signal changes. Example:
+
+```ts
+import {effect} from '@angular/core';
+
+constructor() {
+  effect(() => console.log(this.mySignal()))
+}
+```
+
 ### Angular Animations
 
 ### Angular Universal
