@@ -1586,6 +1586,15 @@ this.mySignal.mutate((value) => {
 })
 ```
 
+Computeds are also signals but are updated from other signals. Example:
+
+```ts
+import {signal, computed} from '@angular/core';
+
+mySignal = signal(1);
+myComputed = computed(() =>  this.mySignal() + 1)
+```
+
 ### Angular Animations
 
 ### Angular Universal
