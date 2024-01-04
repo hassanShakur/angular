@@ -1549,8 +1549,48 @@ import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
 export class AppModule {}
 ```
 
+### Signals, Effects & Computeds
+
+Signals are used to better manage changes in the app and improve performance by telling angular when to update the view and not let it observe every change. Exaplme:
+
+```ts
+import {signal} from '@angular/core';
+
+// later in the code
+this.mySignal = new signal('initial value');
+```
+
+Then in the `html`:
+
+```html
+<!-- signal must be invoked to get its value -->
+<p>{{ mySignal() }}</p>
+```
+
+To update the signal, several options exist:
+
+```ts
+// 1. set the value
+this.mySignal.set('new value');
+
+// 2. update the value
+this.mySignal.update((value) => {
+  return 'new value';
+})
+
+// 3. mutate incase of an array or object
+this.mySignal.mutate((value) => {
+  value.push('new value');
+  // or
+  value = [...value, 'new value'];
+})
+```
+
+### Angular Animations
+
 ### Angular Universal
 
 ### NgRx
 
 <!-- TODO: Route Guards, rxjs (pipes, map, filter...), Observables -->
+<!-- Signals and computeds -->
